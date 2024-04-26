@@ -3,10 +3,11 @@
         <div *ngIf="isLoading">
             <app-loading-spinner></app-loading-spinner>
         </div>
-        <div class="alert alert-danger row justify-content-center" *ngIf="error">
+        <!-- <div class="alert alert-danger row justify-content-center" *ngIf="error">
             <p class="col-xs-11">{{error}}</p>
             <button class="close col-xs-1" style="width: 25px; height: 20px" type="button" (click)="onHandleError()">x</button>
-        </div>
+        </div> -->
+        <app-alert [message]="error" *ngIf="error" (close)="onHandleError()"></app-alert>
         <div class="alert alert-success row justify-content-center" *ngIf="loginsuccess">
             <p class="col-xs-11">{{loginsuccess}}</p>
             <button class="close col-xs-1" style="width: 25px; height: 20px" type="button" (click)="loginSuccess()">x</button>

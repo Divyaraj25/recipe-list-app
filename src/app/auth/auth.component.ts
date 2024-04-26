@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, ComponentFactoryResolver, ViewChild, viewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { AuthService } from "./auth.service";
 import { Router } from "@angular/router";
+import { AlertComponent } from "../shared/alert/alert.component";
 
 @Component({
     selector: 'app-auth',
@@ -57,6 +58,7 @@ export class AuthComponent {
                 errorMessage => {
                     console.log(errorMessage)
                     this.error = errorMessage
+                    // this.showErrorAlert(errorMessage)
                     this.isLoading = false
                 }
             )
@@ -64,4 +66,15 @@ export class AuthComponent {
             f.reset()
         }
     }
+    // private showErrorAlert(message: string) {
+    //     // const alertCmp = new AlertComponent();
+    //     const alertCmp = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+    //     const hostViewContainerRef = this.alertHost.viewContainerRef;
+    //     hostViewContainerRef.clear();
+    //     const componentRef = hostViewContainerRef.createComponent(alertCmp);
+    //     componentRef.instance.message = message;
+    //     componentRef.instance.close.subscribe(() => {
+    //         componentRef.destroy();
+    //     })
+    // }
 }
