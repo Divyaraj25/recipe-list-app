@@ -9,12 +9,12 @@ import { recipeService } from "./recipe.service";
 export class RecipeResolverService implements Resolve<Recipe[]> {
     constructor(private dataStorageService: DataStorageService, private recipeService: recipeService) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const recipes = this.recipeService.getRecipes()
 
-        if(recipes.length === 0){
+        if (recipes.length === 0) {
             return this.dataStorageService.fetchRecipes()
-        }else{
+        } else {
             return recipes
         }
         // const recipes = this.dataStorageService.fetchRecipes()

@@ -1,7 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Subject, catchError, tap } from "rxjs";
+import { BehaviorSubject, Subject, Subscription, catchError, tap } from "rxjs";
 import { UserModel } from "./user.model";
+import { Router } from "@angular/router";
 
 interface AuthResponseData {
     idToken: string;
@@ -16,8 +17,8 @@ interface AuthResponseData {
     providedIn: 'root'
 })
 export class AuthService {
-    user = new Subject<UserModel>()
-    constructor(private http: HttpClient) { }
+    user = new BehaviorSubject<UserModel>(null)
+    constructor(private http: HttpClient, private router:Router) { }
     signup(email: string, password: string) {
         return this.http.post(
             'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC4HaQUNctZt0LcIk_PKhT9Cz7CL67xFjo',
@@ -73,5 +74,9 @@ export class AuthService {
             const user = new UserModel(resData['email'], resData['localId'], resData['idToken'], expiration);
             this.user.next(user);
         }))
+    }
+    logout(){
+        this.user.next(null)
+        this.router.navigate(['/auth'])
     }
 }
