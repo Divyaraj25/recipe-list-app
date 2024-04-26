@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError } from "rxjs";
+import { Subject, catchError, tap } from "rxjs";
+import { UserModel } from "./user.model";
 
 interface AuthResponseData {
     idToken: string;
@@ -15,6 +16,7 @@ interface AuthResponseData {
     providedIn: 'root'
 })
 export class AuthService {
+    user = new Subject<UserModel>()
     constructor(private http: HttpClient) { }
     signup(email: string, password: string) {
         return this.http.post(
@@ -36,6 +38,10 @@ export class AuthService {
                     break;
             }
             throw new Error(errorMessage);
+        }), tap(resData => {
+            const expiration = new Date(new Date().getTime() + +resData['expiresIn'] * 1000);
+            const user = new UserModel(resData['email'], resData['localId'], resData['idToken'], expiration);
+            this.user.next(user);
         }))
     }
 
@@ -62,6 +68,10 @@ export class AuthService {
                     break;
             }
             throw new Error(errorMessage);
+        }), tap(resData => {
+            const expiration = new Date(new Date().getTime() + +resData['expiresIn'] * 1000);
+            const user = new UserModel(resData['email'], resData['localId'], resData['idToken'], expiration);
+            this.user.next(user);
         }))
     }
 }
