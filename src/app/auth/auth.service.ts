@@ -57,8 +57,8 @@ export class AuthService {
                 case 'EMAIL_NOT_FOUND':
                     errorMessage = 'This email does not exist.';
                     break;
-                case 'INVALID_PASSWORD':
-                    errorMessage = 'This password is not correct.';
+                case "INVALID_LOGIN_CREDENTIALS":
+                    errorMessage = 'invalid login credentials';
                     break;
             }
             throw new Error(errorMessage);
