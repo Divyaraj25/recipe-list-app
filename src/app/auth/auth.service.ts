@@ -1,8 +1,10 @@
 import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
 import { Injectable, OnDestroy } from "@angular/core";
 import { BehaviorSubject, Subject, Subscription, catchError, tap } from "rxjs";
+
 import { UserModel } from "./user.model";
-import { Router } from "@angular/router";
+import { environment } from "../../environments/environment";
 
 interface AuthResponseData {
     idToken: string;
@@ -22,7 +24,7 @@ export class AuthService{
     constructor(private http: HttpClient, private router:Router) { }
     signup(email: string, password: string) {
         return this.http.post(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC4HaQUNctZt0LcIk_PKhT9Cz7CL67xFjo',
+            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.apiKey,
             {
                 email: email,
                 password: password,
@@ -51,7 +53,7 @@ export class AuthService{
 
     login(email: string, password: string) {
         return this.http.post<AuthResponseData>(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC4HaQUNctZt0LcIk_PKhT9Cz7CL67xFjo',
+            'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.apiKey,
             {
                 email: email,
                 password: password,
