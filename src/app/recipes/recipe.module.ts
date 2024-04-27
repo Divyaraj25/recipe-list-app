@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from '../app-routing.module';
 import { RecipeRoutingModule } from './recipe-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
@@ -23,7 +22,6 @@ import { RecipesComponent } from './recipes.component';
     ],
     // inplace of browser module, we use common module, because browser module only used once in app
     imports: [
-        AppRoutingModule,
         ReactiveFormsModule,
         RecipeRoutingModule,
         SharedModule
